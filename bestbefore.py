@@ -39,12 +39,13 @@ if __name__ == "__main__":
     for p in date_parts:
         if p < 0 or p >= 3000 or len(str(p)) == 3:
             illegal_input = True
-            print raw_date + "is illegal"
+            sys.stdout.write(raw_date + "is illegal")
             break
 
     if not illegal_input:
         date = min_date(date_parts)
         if date is not None:
-            print date
+            # don't print any additional spaces or newlines
+            sys.stdout.write(date)
         else:
-            print raw_date + " is illegal"
+            sys.stdout.write(raw_date + " is illegal")
