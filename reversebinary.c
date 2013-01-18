@@ -3,9 +3,7 @@
  * by Spotify's tech puzzle at
  * http://www.spotify.com/at/jobs/tech/reversed-binary/
  */
-#include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 
 int main(int argc, char** argv) {
     int n;
