@@ -27,8 +27,6 @@ for _ in xrange(testcases):
     # number of cats, dogs and voters
     cats, dogs, voters = [int(num) for num in raw_input().split(" ")]
 
-    # process votes and build an adjacency matrix from them
-    # Two votes are connected if they do not exclude each other
     votes = []
     for __ in xrange(voters):
         love, hate = [vote.strip() for vote in raw_input().split(" ")]
