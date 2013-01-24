@@ -28,52 +28,71 @@ def build_adjacency_matrix(votes):
 
     return matrix
 
+def build_new(connected, c, arr):
+    return [x for x in arr if connected[c][x]]
+
 def algorithm457(connected, candidates, processed=None, compsub=None):
     '''implementation of the Bron-Kerbosch Algorithm for finding maximum
        cliques in undirected graphs'''
 
     if processed is None:
-        processed = []
+        processed = set()
     if compsub is None:
-        compsub = []
+        compsub = set()
 
-    # if a node in "processed" is connect to every
-    # node in candidate, we know that these candidates
-    # won't form a maximum clique, since this clique
-    # would have already been found previously
-    wrong_path = False
+    num_cand = len(candidates)
+    maxedges = -1
+    pivot = -1
     for p in processed:
-        count = 0
+        edges = 0
         for c in candidates:
             if connected[p][c]:
-                count += 1
+                edges += 1
 
-        if count == len(candidates):
-            wrong_path = True
-            break
+        if edges > maxedges:
+            maxedges = edges
+            pivot = p 
+            # if a node in "processed" is connect to every
+            # node in candidate, we know that these candidates
+            # won't form a maximum clique, since this clique
+            # would have already been found previously
+            if edges == num_cand:
+                return
 
+    for p in candidates:
+        edges = 0
+        for c in candidates:
+            if connected[p][c]:
+                edges += 1
+
+        if edges > maxedges:
+            maxedges = edges
+            pivot = p
+
+    smaller_candidates = set(x for x in candidates if connected[pivot][x])
+    
     # size of the biggest clique found
     max_clique = 0
-    if not wrong_path:
-        while len(candidates) > 0:
-            c = candidates[0]
-            candidates = candidates[1:]
-            compsub.append(c)
+    for c in smaller_candidates:
+        candidates.remove(c)
+        compsub.add(c)
 
-            # remove all nodes from processed and candidates that are not connected to c
-            new_processed  = [x for x in processed if connected[c][x]]
-            new_candidates = [x for x in candidates if connected[c][x]]
+        # remove all nodes from processed and candidates that are not connected to c
+        new_processed  = set(x for x in processed if connected[c][x])
+        new_candidates = set(x for x in candidates if connected[c][x])
 
-            if len(new_processed) == 0 and len(new_candidates) == 0:
-                max_clique = max(max_clique, len(compsub))
-            else:
-                max_clique = max(max_clique, algorithm457(connected, 
-                                                          new_candidates,
-                                                          new_processed,
-                                                          compsub))
+        if not new_processed and not new_candidates:
+            max_clique = max(max_clique, len(compsub))
+        elif not new_processed and len(new_candidates) is 1:
+            max_clique = max(max_clique, len(compsub)+1)
+        else:
+            max_clique = max(max_clique, algorithm457(connected, 
+                                                      new_candidates,
+                                                      new_processed,
+                                                      compsub))
 
-            processed.append(c)
-            compsub.remove(c)
+        processed.add(c)
+        compsub.remove(c)
 
     return max_clique
 
@@ -98,7 +117,7 @@ for _ in xrange(testcases):
     # Run the Bron-Kerbosch Algorithm (CACM's Algorithm 457)
     # The algorithm returns the maximum cardinality of all the
     # maximum cliques found.
-    max_clique = algorithm457(connected, range(len(votes)))
+    max_clique = algorithm457(connected, set(range(len(votes))))
 
     cliques.append(max_clique)
 
