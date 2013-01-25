@@ -1,3 +1,17 @@
+# I modelled the problem as a graph. Each vote 
+# represents a vertex. If two votes do not exclude
+# one another in a way that they can't both be fully
+# satisfied then they are connected via an edge.
+# 
+# So now the objective is to find the largest (in terms of
+# cardinality of vertices) clique in the graph.
+# Unfortunately this problem is NP-complete.
+# Nevertheless two scientist developed an algorithm
+# for tackling this that problem and which also performs
+# well in practice: The Bron-Kerbosch Algorithm.
+#
+# This algorithm has been implemented in NetworkX where it
+# hides behind the function "find_cliques".
 import sys
 import networkx as nx
 
