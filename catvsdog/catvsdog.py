@@ -30,7 +30,7 @@ def build_graph(votes):
     G = hopcroftgraph()
 
     N = len(votes)
-    for i in xrange(N):
+    for i in range(N):
         love1, hate1 = votes[i]
         vertex1 = "#%d %s %s" % (i, love1, hate1)
         
@@ -41,7 +41,7 @@ def build_graph(votes):
         else:
             V2.add(vertex1)
 
-        for j in xrange(N):
+        for j in range(N):
             love2, hate2 = votes[j]
             if love1 == hate2 or love2 == hate1:
                 vertex2 = "#%d %s %s" % (j, love2, hate2)
@@ -54,12 +54,12 @@ testcases = int(raw_input())
 
 results = []
 
-for _ in xrange(testcases):
+for _ in range(testcases):
     # number of cats, dogs and voters
     cats, dogs, voters = [int(num) for num in raw_input().split(" ")]
 
     votes = []
-    for _ in xrange(voters):
+    for _ in range(voters):
         love, hate = [vote.strip() for vote in raw_input().split(" ")]
         votes.append((love,hate))
 
@@ -68,6 +68,6 @@ for _ in xrange(testcases):
     results.append(result)
 
 N = len(results)
-for i in xrange(N-1):
+for i in range(N-1):
     sys.stdout.write("%d\n" % results[i])
 sys.stdout.write("%d" % results[N-1])

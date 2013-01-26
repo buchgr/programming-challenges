@@ -69,7 +69,7 @@ def bfs(G, V1):
         if phase_one:
             qlen = len(q)
 
-            for _ in xrange(qlen):
+            for _ in range(qlen):
                 # current vertice
                 v = q.popleft()
                 # get all neighbours connected via a free edge and which have not been visited by the
@@ -92,7 +92,7 @@ def bfs(G, V1):
 
             qlen = len(q)
 
-            for _ in xrange(qlen):
+            for _ in range(qlen):
                 # current vertice
                 v = q.popleft()
                 matched_nbrs = [w for w,matched in G.neighbours(v).items() if matched and level[w] == -1] 
