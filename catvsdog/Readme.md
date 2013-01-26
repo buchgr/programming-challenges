@@ -8,11 +8,13 @@ Each viewer gets to cast a vote on two things: one pet which should be kept on t
 Ingenious as they are, the producers have decided to use an advancement procedure which guarantees that as many viewers as possible will continue watching the show: the pets that get to stay will be chosen so as to maximize the number of viewers who get both their opinions satisfied. Write a program to calculate this maximum number of viewers.
 
 **Input**
+
 On the first line one positive number: the number of testcases, at most 100. After that per testcase:
 * One line with three integers c, d, v (1 ≤ c, d ≤ 100 and 0 ≤ v ≤ 500): the number of cats, dogs, and voters.
 * v lines with two pet identifiers each. The first is the pet that this voter wants to keep, the second is the pet that this voter wants to throw out. A pet identifier starts with one of the characters ‘C’ or ‘D’, indicating whether the pet is a cat or dog, respectively. The remaining part of the identifier is an integer giving the number of the pet (between 1 and c for cats, and between 1 and d for dogs). So for instance, “D42” indicates dog number 42.
 
 **Output**
+
 Per testcase:
 * One line with the maximum possible number of satisfied voters for the show.
 
