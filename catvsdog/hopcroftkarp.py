@@ -72,14 +72,13 @@ def bfs(G, V1):
             for _ in xrange(qlen):
                 # current vertice
                 v = q.popleft()
-                # get all neighbours connected via a free edge
-                unmatched_nbrs = [e[0] for e in G.neighbours(v).items() if not e[1]]
+                # get all neighbours connected via a free edge and which have not been visited by the
+                # BFS yet
+                unmatched_nbrs = [w for w,matched in G.neighbours(v).items() if not matched and level[w] == -1]
 
                 for w in unmatched_nbrs:
-                    # the neighbour has not been visited by the BFS yet
-                    if level[w] == -1:
-                        level[w] = level[v] + 1
-                        q.append(w)
+                    level[w] = level[v] + 1
+                    q.append(w)
 
             # alternate between the phases
             phase_one = False
@@ -96,13 +95,11 @@ def bfs(G, V1):
             for _ in xrange(qlen):
                 # current vertice
                 v = q.popleft()
-                matched_nbrs = [e[0] for e in G.neighbours(v).items() if e[1]] 
+                matched_nbrs = [w for w,matched in G.neighbours(v).items() if matched and level[w] == -1] 
 
                 for w in matched_nbrs:
-                    # the neighbour has not been visited by the BFS yet
-                    if level[w] == -1:
-                        level[w] = level[v] + 1
-                        q.append(w)
+                    level[w] = level[v] + 1
+                    q.append(w)
 
             # alternate between the phases
             phase_one = True
@@ -114,7 +111,7 @@ def dfs(G, V1, V2, v, level):
 
     if v in V1:
         # for all nbrs of v that are connected via a free edge and level[w] - level[v] = 1 
-        vertices = [e[0] for e in G.neighbours(v).items() if not e[1] and level[e[0]] == level[v] + 1]
+        vertices = [w for w,matched in G.neighbours(v).items() if not matched and level[w] == level[v] + 1]
 
         # no more ways to go? no problem
         # we'll just continue with the parent vertex
@@ -140,7 +137,7 @@ def dfs(G, V1, V2, v, level):
     # v is in V2
     else:
         # filter all neighbours connected via a matched edge
-        vertices = [e[0] for e in G.neighbours(v).items() if e[1] and level[e[0]] == level[v] + 1]
+        vertices = [w for w,matched in G.neighbours(v).items() if matched and level[w] == level[v] + 1]
 
         if not vertices:
             level[v] = -1
