@@ -1,3 +1,25 @@
+# I modelled this problem as a bipartite graph
+# where each vote is a vertex. All votes in favor of cats 
+# go on one side and all votes in favor of dogs go to the other
+# side of the graph.
+# Two vertices/votes are connected if they exclude one another,
+# in a way that they cannot both be satisfied (e.g. C1 D1 and D1 C1)
+#
+# Then I apply the Hopcroft-Karp algorithm to calculate a maximum
+# matching.
+#
+# The idea behind using the Hopcroft-Karp algorithm is as follows:
+# Each set of votes contains at least one "biggest group of 
+# non-excluding votes". Each vote that is not in this group collides
+# with at least one vote in the group, otherwise it would be in
+# that group itself. So for every vote colliding with some vote
+# from the biggest group, the matching increases by one. Therefore
+# the maximum matching has the same size as the total number of
+# collissions between the biggest group and every vote not in it and
+# that again is the number of votes NOT in the "biggest group of
+# non-excluding votes".
+# Therefore |all votes| - |maximum matching| = |biggest group of non-excluding-votes|
+# 
 import sys
 
 from hopcroftkarp import hopcroftgraph, maximum_matching
