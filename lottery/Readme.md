@@ -14,6 +14,7 @@ The input consists of a single line containing four integers:
 * 1 ≤ p ≤ m: the number of people in your group.
 
 **Output**
+
 Output a single line containing the probability that your entire group can get tickets to the show. This probability should be given with an absolute error of at most 10^−9.
 
 **Sample input 1**
