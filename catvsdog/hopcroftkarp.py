@@ -17,16 +17,10 @@ class hopcroftgraph:
         # get the current state (matched / free)
         match = self.graph[v1][v2]
         # and invert it
-        self.add_edge(v1, v2, not match)
+        self.add_edge(v1, v2, (not match))
 
     def free_vertices(self):
-        vertices = set()
-        for v,e in self.graph.iteritems():
-            # check for matched edges
-            if not any(e.values()):
-                vertices.add(v)
-
-        return vertices
+        return set(v for v,e in self.graph.items() if not any(e.values()))
 
     def matched_vertex(self, v):
         if not v in self.graph:
@@ -74,7 +68,7 @@ def bfs(G, V1):
                 v = q.popleft()
                 # get all neighbours connected via a free edge and which have not been visited by the
                 # BFS yet
-                unmatched_nbrs = [w for w,matched in G.neighbours(v).items() if not matched and level[w] == -1]
+                unmatched_nbrs = (w for w,matched in G.neighbours(v).items() if not matched and level[w] == -1)
 
                 for w in unmatched_nbrs:
                     level[w] = level[v] + 1
@@ -95,7 +89,7 @@ def bfs(G, V1):
             for _ in range(qlen):
                 # current vertice
                 v = q.popleft()
-                matched_nbrs = [w for w,matched in G.neighbours(v).items() if matched and level[w] == -1] 
+                matched_nbrs = (w for w,matched in G.neighbours(v).items() if matched and level[w] == -1)
 
                 for w in matched_nbrs:
                     level[w] = level[v] + 1
