@@ -93,14 +93,15 @@ public class ZipfsongPuzzle {
   		    /**
   		     * 4. Output
   		     */
-  		    StringBuilder outBuffer = new StringBuilder();
-			for(int i=0; i < m; ++i) {
-				outBuffer.append(songs[i]);
-				// Honorary Judge Kattis does not like
-				// a new line at the end
-                if (i < m-1)
-				    outBuffer.append('\n');
+            StringBuilder outBuffer = new StringBuilder();
+			for(int i=0; i < m-1; ++i) {
+				outBuffer.append(songs[i])
+                         .append('\n');
 			}
+
+	    	// Honorary Judge Kattis does not like
+			// a new line at the end
+            outBuffer.append(songs[m-1]);     
 			
 			System.out.print(outBuffer);
 		} catch (Exception e) {
